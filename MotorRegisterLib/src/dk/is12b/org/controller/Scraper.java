@@ -1,8 +1,6 @@
-package controller;
+package dk.is12b.org.controller;
 
 import java.util.List;
-
-import model.Car;
 
 import com.gargoylesoftware.htmlunit.Page;
 import com.gargoylesoftware.htmlunit.ScriptResult;
@@ -11,6 +9,8 @@ import com.gargoylesoftware.htmlunit.html.DomElement;
 import com.gargoylesoftware.htmlunit.html.HtmlDivision;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.gargoylesoftware.htmlunit.html.HtmlSpan;
+
+import dk.is12b.org.model.Car;
 
 public class Scraper {
 

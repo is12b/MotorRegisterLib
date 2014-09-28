@@ -1,4 +1,4 @@
-package model;
+package dk.is12b.org.model;
 
 public class Car {
 	//Vehicle - Køretøj
