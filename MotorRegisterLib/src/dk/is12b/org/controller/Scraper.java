@@ -30,7 +30,7 @@ public class Scraper {
 	@SuppressWarnings("unchecked")
 	public void homePage(String regNr) throws Exception {
 	    WebClient webClient = new WebClient();
-	    HtmlPage page = webClient.getPage("https://motorregister.skat.dk/dmr-front/appmanager/skat/dmr?_nfpb=true&_windowLabel=kerne_vis_koeretoej&kerne_vis_koeretoej_actionOverride=%2Fdk%2Fskat%2Fdmr%2Ffront%2Fportlets%2Fkoeretoej%2Fnested%2FfremsoegKoeretoej%2Fsearch&_pageLabel=vis_koeretoej_side");
+	    HtmlPage page = webClient.getPage("https://motorregister.skat.dk/dmr-front/appmanager/skat/dmr?_nfpb=true&_nfpb=true&_pageLabel=vis_koeretoej_side&_nfls=false");
 	    
 	    ScriptResult result = page.executeJavaScript("document.getElementById('regnr').checked=true;"
                 +"document.getElementById('soegeord').value='"+regNr+"';"
@@ -38,9 +38,8 @@ public class Scraper {
                 +"DMR.WaitForLoad.on();");
 	    final HtmlPage finalPage = (HtmlPage) result.getNewPage();
 	    
-	    // Getting the first Column for Vehicle and Registration data
-	    HtmlDivision divColNo1 = (HtmlDivision) finalPage.getByXPath("//div[@class='colNo1 unit']").get(0);	    
-	    List<HtmlSpan> divsVehicle = (List<HtmlSpan>) divColNo1.getByXPath("//span[@class='value']");
+	    // Getting the first Column for Vehicle and Registration data    
+	    List<HtmlSpan> divsVehicle = (List<HtmlSpan>) finalPage.getByXPath("//span[@class='value']");
 	    List<HtmlDivision> spans = (List<HtmlDivision>) finalPage.getByXPath("//div[contains(@class,'colValue')]");
 	    List<HtmlDivision> blocking = (List<HtmlDivision>) finalPage.getByXPath("//div[contains(@class,'unit formCol colNo1')]");
 	    
