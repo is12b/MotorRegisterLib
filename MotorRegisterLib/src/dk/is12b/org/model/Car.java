@@ -1715,7 +1715,7 @@ public class Car {
 	/**
 	 * @return the blocked
 	 */
-	public String isBlocked() {
+	public String getBlocked() {
 		return blocked;
 	}
 	
@@ -1726,4 +1726,150 @@ public class Car {
 		this.blocked = blocked;
 	}
 	
+	public void printOut(){
+		System.out.println(getChassisNumber()); // Stelnummer
+		System.out.println(getModel()); // Mærke, Model, Variant
+		System.out.println(getType()); // Art
+		System.out.println(getLatestChangeVehicle()); // Seneste ændring
+		System.out.println(getEfType()); // EF-Type-godkendelsenr.
+		System.out.println(getBreakDecleraionNum()); // Typeanmeldelses­nummer/bremsedata-erklæringsnummer
+		System.out.println(getFurtherUse()); // Supplerende anvendelser
+		
+		//Registration - Registrerings­forhold
+		System.out.println(getRegNumber()); // Registrerings­nummer
+		System.out.println(getFirstRegDate()); // Første registrerings­dato
+		System.out.println(getUse()); // Anvendelse
+		System.out.println(getLatestChangeReg()); // Seneste ændring
+		System.out.println(getStatus()); // Status
+		System.out.println(getRegType()); // Type
+		System.out.println(getEuVariation()); // EU-variant
+		System.out.println(getEuVersion()); // EU-version
+		System.out.println(getCategory()); // Kategori
+		System.out.println(getManufacturer()); // Fabrikant
+		
+		//Valuation - Anmodning om værdifastsættelse
+		System.out.println(getRequestYear()); // Anmodningsårsag
+		System.out.println(getValuationDescription()); // Beskrivelse
+		System.out.println(getValuationMileage()); // Kilometerstand
+		System.out.println(getValuationCondition()); // Køretøjes stand
+		
+		//Identification - Identifikation 
+		System.out.println(getVehicleID()); // KøretøjsID
+		System.out.println(getChassisNumSideVagon()); // Stelnummer tilkoblet sidevogn
+		System.out.println(getColor()); // Farve
+		System.out.println(getModelYear()); // Model-år
+		System.out.println(getFirstIdDate()); // 1. registreringsdato
+		System.out.println(getCommissioningDate()); // Ibrugtagningsdato
+		System.out.println(getNcapTest()); // Bestået NCAP test med mindst 5 stjerner
+		System.out.println(getVanTax()); // Varevogn 30 procent afgift
+		System.out.println(getFuelMode()); // Fuelmode
+		System.out.println(getAirSuspension()); // Vejvenlig luftaf­fjedring
+		
+		//Stand - Stand
+		System.out.println(getMileageStand()); // Kilometerstand
+		System.out.println(getMileageDocumentation()); // Dokumentation for kilometerstand
+		System.out.println(getStandComments()); // Bemærkninger for stand
+		System.out.println(getVehicleStand()); // Køretøj stand
+		System.out.println(getTrafficInjury()); // Trafikskade
+		System.out.println(getOriginalVeteran()); // Original veterankøretøj
+		
+		//Electrical installations - El-anlæg
+		System.out.println(isZoneKlimate1or2()); // 1- eller 2-zone klima
+		System.out.println(isZoneKlimate3or4()); // 3- eller 4-zone klima
+		System.out.println(isDistanceRadar()); // Afstandsradar
+		System.out.println(getCruiseControl()); // Aktiv fartpilot
+		System.out.println(isSeatBeltWarning()); // Antal selealarmer
+		System.out.println(isRearViewCam()); // Bakkamera
+		System.out.println(isHeatedWindscreen()); // El-opvarmet forrude
+		System.out.println(isPowerTailgate()); // Elektrisk bagklap
+		System.out.println(isElectricalClosingDoors()); // Elektrisk lukning af døre
+		System.out.println(isHeadupDisplay()); // Head-up display
+		System.out.println(isHifi()); // HiFi musikanlæg
+		System.out.println(isKeyLess()); // Key-less go (nøglefri)
+		System.out.println(isLineGuardian()); // Linievogter
+		System.out.println(isManualAircon()); // Manuel Aircondition
+		System.out.println(isNightVision()); // Natsyns-udstyr
+		System.out.println(isNavigation()); // Navigationssystem med skærm
+		System.out.println(isOrgAlarm()); // Original tyverialarm
+		System.out.println(isParkingAssistant()); // Parkeringsassistent
+		System.out.println(isParkingControlRear()); // Parkeringskontrol bag
+		System.out.println(isParkingControlFront()); // Parkeringskontrol for
+		System.out.println(isSolarCooling()); // Solcellekøling, kabine
+		System.out.println(isVoiceControl()); // Stemmestyring
+		System.out.println(isLaneSwitchAlarm()); // Vognbaneskift-alarm
+		
+		//Body - Karrosseri 
+		System.out.println(isThreeOrMoreSeatRows()); // 3 el. flere sæderækker
+		System.out.println(isDoubleCab()); // Dobbeltkabine
+		System.out.println(isElectricSunroof()); // El-soltag
+		System.out.println(isGlassRoof()); // Glastag
+		System.out.println(isBendLighting()); // Kurvelys
+		System.out.println(isRht()); // Metalfoldetag
+		System.out.println(isMetallic()); // Metallak
+		System.out.println(isBodyRebuilt()); // Ombygget karrosseri
+		System.out.println(isTarga()); // Targa
+		System.out.println(isLoadArea()); // U. siderude i v. side af varerum
+		System.out.println(isXenon()); // Xenon forlygter
+		
+		//Engine - Motor
+		System.out.println(isSixGearManual()); // 6-gear manuel
+		System.out.println(isEscStability()); // ESC stabilitetskontrol
+		System.out.println(isCompressor()); // Kompressor
+		System.out.println(isEngineHeater()); // Motor/kabinevarmer
+		System.out.println(isEngineNumber()); // Motornummer
+		System.out.println(isDifferentEngine()); // Tunet/anden motor
+		
+		//Breaks - Bremser
+		System.out.println(isAbs()); // ABS bremser
+		System.out.println(isCeramicDisc()); // Keramiske skiver
+		System.out.println(isDiscBrakesRear()); // Skivebremser bag
+		System.out.println(isDiscBrakesFront()); // Skivebremser for
+		
+		//Bearing Elements - Bærende Elementer
+		System.out.println(isSuspensionFrame()); // Affjedret stel
+		System.out.println(isElectronicDampers()); // Elektroniske dæmpere
+		System.out.println(isAirSuspensionBearing()); // Luftaffjedring
+		System.out.println(isLevelling()); // Niveauregulering
+		System.out.println(isRebuiltFrame()); // Ombygget stel
+		System.out.println(isRigidFrame()); // Stift stel
+		System.out.println(isTiresGreaterThan20()); // Større hjul end 20"
+		
+		//Equipment - Udstyr
+		System.out.println(getAirbags()); // Antal airbags
+		System.out.println(isRadio()); // Radio
+		
+		//Transmission - Transmission
+		System.out.println(isAutomaticGearing()); // Automatgear
+		System.out.println(isAllWheelDrive()); // Firehjulstræk (4WD)
+		System.out.println(isSteeringWheelGearShift()); // Ratbetjent gear
+		
+		//Interior - Indretning
+		System.out.println(isPartLeatherSeat()); // Del-lædersæder
+		System.out.println(isBlindsRearDoors()); // El-gardiner i bagdøre
+		System.out.println(isBlindsRearWindow()); // El-gardiner i bagrude
+		System.out.println(isElectricAdjustableSeatsBehind()); // El-indstillelige sæder bag
+		System.out.println(isSolidPanniers()); // Faste sidetasker
+		System.out.println(getIntegratedChildSeat()); // Integreret barnesæde
+		System.out.println(isLeatherSeats()); // Læder/skindsæder
+		System.out.println(isMassageSeats()); // Massagesæder
+		System.out.println(isMemorySeatsFront()); // Memory-sæder for
+		System.out.println(isSportComfortSeats()); // Sport-/komfortsæder
+		System.out.println(isVentilatedSeats()); // Ventilation i sæder
+		
+		//Steering - Styreapparat
+		System.out.println(isElectricAdjustingSteeringWheel()); // El-indstilleligt rat
+		System.out.println(isRightSteering()); // Højrestyring
+		System.out.println(isLongFork()); // Lang forgaffel
+		System.out.println(isMultifunctionSteeringWheel()); // Multifunktionsrat
+		System.out.println(isHeatedSteeringWheel()); // Opvarmet rat/styr
+		
+		//Turbo - Turbo
+		System.out.println(isTurbo()); // Turbo
+		
+		//Other - Andet Udstyr
+		System.out.println(getOther()); // Andet udstyr
+		
+		//Blocking State - Blokeringstatus
+		System.out.println(getBlocked()); // Blokeringsstatus  
+	}
 }

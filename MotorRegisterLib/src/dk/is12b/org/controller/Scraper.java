@@ -14,23 +14,14 @@ import dk.is12b.org.model.Car;
 
 public class Scraper {
 
-	public static void main(String[] args) {
-		new Scraper();
-	}
-
 	public Scraper(){
-		try {
-			homePage("FA21984");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
 	}
 
 	@SuppressWarnings("unchecked")
-	public void homePage(String regNr) throws Exception {
+	public Car Scrape(String regNr) throws Exception {
 	    WebClient webClient = new WebClient();
-	    HtmlPage page = webClient.getPage("https://motorregister.skat.dk/dmr-front/appmanager/skat/dmr?_nfpb=true&_windowLabel=kerne_vis_koeretoej&kerne_vis_koeretoej_actionOverride=%2Fdk%2Fskat%2Fdmr%2Ffront%2Fportlets%2Fkoeretoej%2Fnested%2FfremsoegKoeretoej%2Fsearch&_pageLabel=vis_koeretoej_side");
+	    HtmlPage page = webClient.getPage("https://motorregister.skat.dk/dmr-front/appmanager/skat/dmr?_nfpb=true&_nfpb=true&_pageLabel=vis_koeretoej_side&_nfls=false");
 	    
 	    ScriptResult result = page.executeJavaScript("document.getElementById('regnr').checked=true;"
                 +"document.getElementById('soegeord').value='"+regNr+"';"
@@ -38,9 +29,8 @@ public class Scraper {
                 +"DMR.WaitForLoad.on();");
 	    final HtmlPage finalPage = (HtmlPage) result.getNewPage();
 	    
-	    // Getting the first Column for Vehicle and Registration data
-	    HtmlDivision divColNo1 = (HtmlDivision) finalPage.getByXPath("//div[@class='colNo1 unit']").get(0);	    
-	    List<HtmlSpan> divsVehicle = (List<HtmlSpan>) divColNo1.getByXPath("//span[@class='value']");
+	    // Getting the first Column for Vehicle and Registration data    
+	    List<HtmlSpan> divsVehicle = (List<HtmlSpan>) finalPage.getByXPath("//span[@class='value']");
 	    List<HtmlDivision> spans = (List<HtmlDivision>) finalPage.getByXPath("//div[contains(@class,'colValue')]");
 	    List<HtmlDivision> blocking = (List<HtmlDivision>) finalPage.getByXPath("//div[contains(@class,'unit formCol colNo1')]");
 	    
@@ -49,15 +39,18 @@ public class Scraper {
 	    
 	    writeVehicleData(car, divsVehicle);
 	    writeData(car, spans, blocking);
-	    
-	    System.out.println(car.getChassisNumber() + ", " + car.getModel() + ", " + car.getType() + ", " + car.getLatestChangeVehicle() + ", " + car.getEfType() + ", "
-		           + car.getBreakDecleraionNum() + ", " + car.getFurtherUse());
-	     
 		
-	    
 	    webClient.closeAllWindows();
+	    
+	    return car;
 	}
 	
+	/**
+	 * Used to populate the car object with the relevant information
+	 * @param car - The car obj where the data is to be stored
+	 * @param divs - List of HtmlDivision containing information ranging from Registration to Other
+	 * @param blocking - List of HtmlDivision with the information on blocking
+	 */
 	public void writeData(Car car, List<HtmlDivision> divs, List<HtmlDivision> blocking){
 		//Registration - Registrerings­forhold
 		car.setRegNumber(divs.get(0).asText());
@@ -197,14 +190,20 @@ public class Scraper {
 		car.setBlocked(blocking.get(15).asText());
 	}
 	
+	/**
+	 * Used to populate the car object with the relevant information regarding VehicleData
+	 * @param car - The car obj where the data is to be stored
+	 * @param divs - List of HtmlDivision containing information regarding Vehicle and Registration
+	 */
 	public void writeVehicleData(Car car, List<HtmlSpan> divs){
-		 car.setChassisNumber(divs.get(0).asText());
-		 car.setModel(divs.get(1).asText());
-		 car.setType(divs.get(2).asText());
-		 car.setLatestChangeVehicle(divs.get(3).asText());
-		 car.setEfType(divs.get(4).asText());
-		 car.setBreakDecleraionNum(divs.get(5).asText());
-		 car.setFurtherUse(divs.get(6).asText());
+		//Vehicle - Køretøj
+		car.setChassisNumber(divs.get(0).asText());
+		car.setModel(divs.get(1).asText());
+		car.setType(divs.get(2).asText());
+		car.setLatestChangeVehicle(divs.get(3).asText());
+		car.setEfType(divs.get(4).asText());
+		car.setBreakDecleraionNum(divs.get(5).asText());
+		car.setFurtherUse(divs.get(6).asText());
 	}
 	
 	
