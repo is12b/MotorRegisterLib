@@ -14,8 +14,12 @@ import dk.is12b.org.model.Car;
 
 public class Scraper {
 
-	public Scraper(){
+	public static void main(String[] args) {
+		new Scraper();
+	}
 
+	public Scraper(){
+		
 	}
 
 	@SuppressWarnings("unchecked")
@@ -39,17 +43,17 @@ public class Scraper {
 	    
 	    writeVehicleData(car, divsVehicle);
 	    writeData(car, spans, blocking);
-		
+	    
 	    webClient.closeAllWindows();
 	    
 	    return car;
 	}
 	
 	/**
-	 * Used to populate the car object with the relevant information
-	 * @param car - The car obj where the data is to be stored
-	 * @param divs - List of HtmlDivision containing information ranging from Registration to Other
-	 * @param blocking - List of HtmlDivision with the information on blocking
+	 * Method used the populate the car obj with the Vehicle data from the page
+	 * @param car - The car obj to be populate
+	 * @param divs - HtmlDivision containing the relevant information
+	 * @param blocking - HtmlDivision containing blocking information
 	 */
 	public void writeData(Car car, List<HtmlDivision> divs, List<HtmlDivision> blocking){
 		//Registration - Registrerings­forhold
@@ -191,19 +195,18 @@ public class Scraper {
 	}
 	
 	/**
-	 * Used to populate the car object with the relevant information regarding VehicleData
-	 * @param car - The car obj where the data is to be stored
-	 * @param divs - List of HtmlDivision containing information regarding Vehicle and Registration
+	 * Method used the populate the car obj with the Vehicle data from the page
+	 * @param car - The car obj to be populated
+	 * @param divs - the HtmlSpan containing the relevant information
 	 */
 	public void writeVehicleData(Car car, List<HtmlSpan> divs){
-		//Vehicle - Køretøj
-		car.setChassisNumber(divs.get(0).asText());
-		car.setModel(divs.get(1).asText());
-		car.setType(divs.get(2).asText());
-		car.setLatestChangeVehicle(divs.get(3).asText());
-		car.setEfType(divs.get(4).asText());
-		car.setBreakDecleraionNum(divs.get(5).asText());
-		car.setFurtherUse(divs.get(6).asText());
+		 car.setChassisNumber(divs.get(0).asText());
+		 car.setModel(divs.get(1).asText());
+		 car.setType(divs.get(2).asText());
+		 car.setLatestChangeVehicle(divs.get(3).asText());
+		 car.setEfType(divs.get(4).asText());
+		 car.setBreakDecleraionNum(divs.get(5).asText());
+		 car.setFurtherUse(divs.get(6).asText());
 	}
 	
 	
