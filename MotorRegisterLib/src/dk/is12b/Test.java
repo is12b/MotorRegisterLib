@@ -15,7 +15,6 @@ public class Test {
 			Car car = sc.Scrape("FA21984");
 			car.printOut();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
