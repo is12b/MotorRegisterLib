@@ -27,5 +27,17 @@ public class Test {
 		System.out.println("Anvendelse: " + car.getUse());
 		System.out.println("Seneste ændring: " + car.getLatestChangeReg());
 		System.out.println("Status: " + car.getStatus());
+		
+		//Checking Cache
+		Car car2 = null;
+		try {
+			car2 = sc.getCar("FA21984");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		if(car == car2){
+			System.out.println("Yepp!");
+		}
 	}
 }

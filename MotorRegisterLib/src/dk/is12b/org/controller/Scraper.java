@@ -11,6 +11,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.gargoylesoftware.htmlunit.html.HtmlSpan;
 
 import dk.is12b.org.model.Car;
+import dk.is12b.org.model.CarContainer;
 
 public class Scraper {
 	private HtmlPage finalPage;
@@ -21,20 +22,24 @@ public class Scraper {
 
 	@SuppressWarnings("unchecked")
 	public Car getCar(String regNr) throws Exception {
-	    WebClient webClient = new WebClient();
-	    HtmlPage page = webClient.getPage("https://motorregister.skat.dk/dmr-front/appmanager/skat/dmr?_nfpb=true&_nfpb=true&_pageLabel=vis_koeretoej_side&_nfls=false");
-	    
-	    ScriptResult result = page.executeJavaScript("document.getElementById('regnr').checked=true;"
-                +"document.getElementById('soegeord').value='"+regNr+"';"
-                +"document.getElementById('searchForm').submit();"
-                +"DMR.WaitForLoad.on();");
-	    
-	    finalPage = (HtmlPage) result.getNewPage();
-	    
-	    Car car = new Car();
-	    writeVehicleData(car);
-	    webClient.closeAllWindows();
-	    
+		CarContainer cCont = CarContainer.getInstance();
+		Car car = cCont.getCar(regNr);
+		
+		if(car == null){
+			car = new Car();
+		    WebClient webClient = new WebClient();
+		    HtmlPage page = webClient.getPage("https://motorregister.skat.dk/dmr-front/appmanager/skat/dmr?_nfpb=true&_nfpb=true&_pageLabel=vis_koeretoej_side&_nfls=false");
+		    
+		    ScriptResult result = page.executeJavaScript("document.getElementById('regnr').checked=true;"
+	                +"document.getElementById('soegeord').value='"+regNr+"';"
+	                +"document.getElementById('searchForm').submit();"
+	                +"DMR.WaitForLoad.on();");
+		    
+		    finalPage = (HtmlPage) result.getNewPage();
+		    writeVehicleData(car);
+		    cCont.addCar(car);
+		    webClient.closeAllWindows();
+		}
 	    return car;
 	}
 	
