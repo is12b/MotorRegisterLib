@@ -15,10 +15,6 @@ import dk.is12b.org.model.Car;
 public class Scraper {
 	private HtmlPage finalPage;
 
-	public static void main(String[] args) {
-		new Scraper();
-	}
-
 	public Scraper(){
 
 	}
@@ -62,6 +58,5 @@ public class Scraper {
 		car.setUse(getSpanValueByKey("Anvendelse:"));
 		car.setLatestChangeReg(getSpanValueByKey("Seneste ændring:"));
 		car.setStatus(getLabelValueByKey("Status:"));
-		System.out.println("1. registreringsdato: " + getLabelValueByKey("Status:"));
 	}
 }
