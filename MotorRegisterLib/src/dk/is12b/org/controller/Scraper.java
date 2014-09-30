@@ -39,13 +39,25 @@ public class Scraper {
 	}
 	
 	public String getSpanValueByKey(String key){
+		String retS = "";
 		DomElement dE = (DomElement) finalPage.getFirstByXPath("//span[contains(., '" + key + "')]");
-	    return dE.getNextElementSibling().asText();
+	    try{
+			retS = dE.getNextElementSibling().asText();;
+		}catch(NullPointerException e){
+			retS = "Ukendt";
+		}
+	    return retS;
 	}
 	
 	public String getLabelValueByKey(String key){
+		String retS = "";
 		DomElement dE = (DomElement) finalPage.getFirstByXPath("//label[contains(., '" + key + "')]");
-	    return dE.getParentNode().getNextSibling().getChildNodes().get(0).asText();
+		try{
+			retS = dE.getParentNode().getNextSibling().getChildNodes().get(0).asText();
+		}catch(NullPointerException e){
+			retS = "Ukendt";
+		}
+	    return retS;
 	}
 	
 	public void writeVehicleData(Car car){
