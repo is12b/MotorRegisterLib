@@ -14,6 +14,25 @@ public class Car {
 	private String latestChangeReg; // Seneste ændring
 	private String status; // Status
 	
+	//Weight - Vægt
+	private String tecTotalWeight; // Teknisk totalvægt
+	private String totalWeight; // Totalvægt
+	private String ownWeight; // Egenvægt
+	private String couplingDevice; // Tilkoblingsanordning
+	private String weightOfTrailerWithBrakes; // Vægt af påhængskøretøj med bremser
+	private String weightOfTrailerWithoutBrakes; // Vægt af påhængskøretøj uden bremser
+	
+	//Motor
+	private String propellant; // Drivkraft
+	private String fuelConsumption; // Brændstofforbrug
+	
+	//Body - Karrosseri
+	private String bodyType; // Karrosseritype
+	private String numOfDoors; // Antal døre
+	private String posOfChassisNumber; // Anbringelse af stelnummer
+	
+	
+	
 	//ID - Iteration
 	private int id;
 	private static int idIterator;
@@ -152,4 +171,159 @@ public class Car {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+
+	/**
+	 * @return the tecTotalWeight
+	 */
+	public String getTecTotalWeight() {
+		return tecTotalWeight;
+	}
+
+	/**
+	 * @param tecTotalWeight the tecTotalWeight to set
+	 */
+	public void setTecTotalWeight(String tecTotalWeight) {
+		this.tecTotalWeight = tecTotalWeight;
+	}
+
+	/**
+	 * @return the totalWeight
+	 */
+	public String getTotalWeight() {
+		return totalWeight;
+	}
+
+	/**
+	 * @param totalWeight the totalWeight to set
+	 */
+	public void setTotalWeight(String totalWeight) {
+		this.totalWeight = totalWeight;
+	}
+
+	/**
+	 * @return the ownWeight
+	 */
+	public String getOwnWeight() {
+		return ownWeight;
+	}
+
+	/**
+	 * @param ownWeight the ownWeight to set
+	 */
+	public void setOwnWeight(String ownWeight) {
+		this.ownWeight = ownWeight;
+	}
+
+	/**
+	 * @return the couplingDevice
+	 */
+	public String getCouplingDevice() {
+		return couplingDevice;
+	}
+
+	/**
+	 * @param couplingDevice the couplingDevice to set
+	 */
+	public void setCouplingDevice(String couplingDevice) {
+		this.couplingDevice = couplingDevice;
+	}
+
+	/**
+	 * @return the weightOfTrailerWithBrakes
+	 */
+	public String getWeightOfTrailerWithBrakes() {
+		return weightOfTrailerWithBrakes;
+	}
+
+	/**
+	 * @param weightOfTrailerWithBrakes the weightOfTrailerWithBrakes to set
+	 */
+	public void setWeightOfTrailerWithBrakes(String weightOfTrailerWithBrakes) {
+		this.weightOfTrailerWithBrakes = weightOfTrailerWithBrakes;
+	}
+
+	/**
+	 * @return the weightOfTrailerWithoutBrakes
+	 */
+	public String getWeightOfTrailerWithoutBrakes() {
+		return weightOfTrailerWithoutBrakes;
+	}
+
+	/**
+	 * @param weightOfTrailerWithoutBrakes the weightOfTrailerWithoutBrakes to set
+	 */
+	public void setWeightOfTrailerWithoutBrakes(String weightOfTrailerWithoutBrakes) {
+		this.weightOfTrailerWithoutBrakes = weightOfTrailerWithoutBrakes;
+	}
+
+	/**
+	 * @return the propellant
+	 */
+	public String getPropellant() {
+		return propellant;
+	}
+
+	/**
+	 * @param propellant the propellant to set
+	 */
+	public void setPropellant(String propellant) {
+		this.propellant = propellant;
+	}
+
+	/**
+	 * @return the fuelConsumption
+	 */
+	public String getFuelConsumption() {
+		return fuelConsumption;
+	}
+
+	/**
+	 * @param fuelConsumption the fuelConsumption to set
+	 */
+	public void setFuelConsumption(String fuelConsumption) {
+		this.fuelConsumption = fuelConsumption;
+	}
+
+	/**
+	 * @return the bodyType
+	 */
+	public String getBodyType() {
+		return bodyType;
+	}
+
+	/**
+	 * @param bodyType the bodyType to set
+	 */
+	public void setBodyType(String bodyType) {
+		this.bodyType = bodyType;
+	}
+
+	/**
+	 * @return the numOfDoors
+	 */
+	public String getNumOfDoors() {
+		return numOfDoors;
+	}
+
+	/**
+	 * @param numOfDoors the numOfDoors to set
+	 */
+	public void setNumOfDoors(String numOfDoors) {
+		this.numOfDoors = numOfDoors;
+	}
+
+	/**
+	 * @return the posOfChassisNumber
+	 */
+	public String getPosOfChassisNumber() {
+		return posOfChassisNumber;
+	}
+
+	/**
+	 * @param posOfChassisNumber the posOfChassisNumber to set
+	 */
+	public void setPosOfChassisNumber(String posOfChassisNumber) {
+		this.posOfChassisNumber = posOfChassisNumber;
+	}
+	
 }

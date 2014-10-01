@@ -37,6 +37,12 @@ public class Scraper {
 		    
 		    finalPage = (HtmlPage) result.getNewPage();
 		    writeVehicleData(car);
+		    
+		    page = webClient.getPage("https://motorregister.skat.dk/dmr-front/appmanager/skat/dmr?_nfpb=true&_windowLabel=kerne_vis_koeretoej&kerne_vis_koeretoej_actionOverride=%2Fdk%2Fskat%2Fdmr%2Ffront%2Fportlets%2Fkoeretoej%2Fnested%2FvisKoeretoej%2FselectTab&kerne_vis_koeretoejdmr_tabset_tab=1&_pageLabel=vis_koeretoej_side");
+		    result = page.executeJavaScript("DMR.WaitForLoad.on();");
+		    finalPage = (HtmlPage) result.getNewPage();
+		    writeTechnicalData(car);
+		    		    
 		    cCont.addCar(car);
 		    webClient.closeAllWindows();
 		}
@@ -65,6 +71,17 @@ public class Scraper {
 	    return retS;
 	}
 	
+	public String getIndentedLabelValueByKey(String key){
+		String retS = "";
+		DomElement dE = (DomElement) finalPage.getFirstByXPath("//label[contains(., '" + key + "')]");
+		try{
+			retS = dE.getParentNode().getParentNode().getNextSibling().getChildNodes().get(0).asText();
+		}catch(NullPointerException e){
+			retS = "Ukendt";
+		}
+	    return retS;
+	}
+	
 	public void writeVehicleData(Car car){
 		car.setChassisNumber(getSpanValueByKey("Stelnummer:"));
 		car.setModel(getSpanValueByKey("Mærke, Model, Variant:"));
@@ -75,5 +92,20 @@ public class Scraper {
 		car.setUse(getSpanValueByKey("Anvendelse:"));
 		car.setLatestChangeReg(getSpanValueByKey("Seneste ændring:"));
 		car.setStatus(getLabelValueByKey("Status:"));
+	}
+	
+
+	public void writeTechnicalData(Car car) {
+		car.setTecTotalWeight(getLabelValueByKey("Teknisk totalvægt:"));
+		car.setTotalWeight(getLabelValueByKey("Totalvægt:"));
+		car.setOwnWeight(getLabelValueByKey("Egenvægt:"));
+		car.setCouplingDevice(getLabelValueByKey("Tilkoblingsanordning:"));
+		car.setWeightOfTrailerWithBrakes(getIndentedLabelValueByKey("Med bremser:"));
+		car.setWeightOfTrailerWithoutBrakes(getIndentedLabelValueByKey("Uden bremser:"));
+		car.setPropellant(getLabelValueByKey("Drivkraft:"));
+		car.setFuelConsumption(getLabelValueByKey("Brændstofforbrug:"));
+		car.setBodyType(getLabelValueByKey("Karrosseritype:"));
+		car.setNumOfDoors(getLabelValueByKey("Antal døre:"));
+		car.setPosOfChassisNumber(getLabelValueByKey("Anbringelse af stelnummer:"));
 	}
 }
