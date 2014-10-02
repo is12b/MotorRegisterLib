@@ -1,7 +1,10 @@
 package dk.is12b;
 
+import java.util.ArrayList;
+
 import dk.is12b.org.controller.Scraper;
 import dk.is12b.org.model.Car;
+import dk.is12b.org.model.Inspection;
 
 public class Test {
 	
@@ -38,7 +41,14 @@ public class Test {
 		System.out.println("Brændstofforbrug: " + car.getFuelConsumption());
 		System.out.println("Karrosseritype: " + car.getBodyType());
 		System.out.println("Antal døre: " + car.getNumOfDoors());
+		System.out.println("Beregnet Synsdato: " + car.getCalInspectionDate());
 		
+		ArrayList<Inspection> inspecs = car.getInspections();
+		System.out.println("Antal syn: " + inspecs.size());
+		
+		for (Inspection i : inspecs) {
+			System.out.println(" ->" + i.getDate() + ", Type: " + i.getType() + ", Status: " + i.getStatus());
+		}
 		//Checking Cache
 		Car car2 = null;
 		try {
