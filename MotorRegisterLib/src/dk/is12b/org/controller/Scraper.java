@@ -118,8 +118,6 @@ public class Scraper {
 		car.setPosOfChassisNumber(getLabelValueByKey("Anbringelse af stelnummer:"));
 	}
 	
-
-	
 	private void writeInspectionData(Car car) {
 		car.setCalInspectionDate(getLabelValueByKey("Beregnet dato for næste indkaldelse til periodisk syn:"));
 		addInspections(car);
