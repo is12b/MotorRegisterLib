@@ -1,5 +1,7 @@
 package dk.is12b.org.model;
 
+import java.util.ArrayList;
+
 public class Car {
 	//Vehicle - Køretøj
 	private String chassisNumber; // Stelnummer
@@ -31,7 +33,9 @@ public class Car {
 	private String numOfDoors; // Antal døre
 	private String posOfChassisNumber; // Anbringelse af stelnummer
 	
-	
+	//inspection - Syn
+	private String calInspectionDate; // Beregnet dato for næste indkaldelse til periodisk syn:
+	private ArrayList<Inspection> inspections;
 	
 	//ID - Iteration
 	private int id;
@@ -40,6 +44,7 @@ public class Car {
 	public Car() {
 		idIterator++;
 		this.id = idIterator;
+		inspections = new ArrayList<Inspection>();
 	}
 	
 	public int getID(){
@@ -325,5 +330,31 @@ public class Car {
 	public void setPosOfChassisNumber(String posOfChassisNumber) {
 		this.posOfChassisNumber = posOfChassisNumber;
 	}
+
+	/**
+	 * @return the calInspectionDate
+	 */
+	public String getCalInspectionDate() {
+		return calInspectionDate;
+	}
+
+	/**
+	 * @param calInspectionDate the calInspectionDate to set
+	 */
+	public void setCalInspectionDate(String calInspectionDate) {
+		this.calInspectionDate = calInspectionDate;
+	}
+
+	/**
+	 * @return the inspections
+	 */
+	public ArrayList<Inspection> getInspections() {
+		return inspections;
+	}
 	
+	public Inspection addInspection(String date, String status) {
+		Inspection newInspec = new Inspection(date, status);
+		inspections.add(newInspec);
+		return newInspec;
+	}
 }
