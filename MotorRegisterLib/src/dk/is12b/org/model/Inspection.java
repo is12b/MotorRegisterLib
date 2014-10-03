@@ -4,13 +4,13 @@ package dk.is12b.org.model;
 public class Inspection {
 
 	private String date;
-	private String status;
-	private String type;
+	private String result;
+	private String km;
+	private String regNr;
+	private String url;
 	
-	public Inspection(String date, String status) {
-		this.date = date;
-		this.status = status;
-		this.type = "";
+	public Inspection() {
+		
 	}
 
 	/**
@@ -21,23 +21,75 @@ public class Inspection {
 	}
 
 	/**
-	 * @return the status
+	 * @param date the date to set
 	 */
-	public String getStatus() {
-		return status;
+	public void setDate(String date) {
+		this.date = date;
 	}
 
 	/**
-	 * @return the type
+	 * @return the result
 	 */
-	public String getType() {
-		return type;
+	public String getResult() {
+		return result;
 	}
 
 	/**
-	 * @param type the type to set
+	 * @param result the result to set
 	 */
-	public void setType(String type) {
-		this.type = type;
+	public void setResult(String result) {
+		this.result = result;
 	}
+
+	/**
+	 * @return the km
+	 */
+	public String getKm() {
+		return km;
+	}
+
+	/**
+	 * @param km the km to set
+	 */
+	public void setKm(String km) {
+		this.km = km;
+	}
+
+	/**
+	 * @return the regNr
+	 */
+	public String getRegNr() {
+		return regNr;
+	}
+
+	/**
+	 * @param regNr the regNr to set
+	 */
+	public void setRegNr(String regNr) {
+		this.regNr = regNr;
+	}
+
+	/**
+	 * @return the url
+	 */
+	public String getUrl() {
+		return url;
+	}
+
+	/**
+	 * @param url the url to set
+	 */
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Inspection [date=" + date + ", result=" + result + ", km=" + km
+				+ ", regNr=" + regNr + ", url=" + url + "]";
+	}
+
 }

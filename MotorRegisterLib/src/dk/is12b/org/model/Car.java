@@ -352,9 +352,8 @@ public class Car {
 		return inspections;
 	}
 	
-	public Inspection addInspection(String date, String status) {
-		Inspection newInspec = new Inspection(date, status);
-		inspections.add(newInspec);
-		return newInspec;
+	public Inspection addInspection(Inspection i) {
+		inspections.add(i);
+		return i;
 	}
 }

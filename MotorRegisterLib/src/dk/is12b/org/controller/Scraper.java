@@ -1,15 +1,21 @@
 package dk.is12b.org.controller;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.util.Arrays;
 import java.util.List;
 
+import com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException;
 import com.gargoylesoftware.htmlunit.Page;
 import com.gargoylesoftware.htmlunit.ScriptResult;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.DomElement;
+import com.gargoylesoftware.htmlunit.html.HtmlAnchor;
 import com.gargoylesoftware.htmlunit.html.HtmlDivision;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.gargoylesoftware.htmlunit.html.HtmlSpan;
 import com.gargoylesoftware.htmlunit.html.HtmlTable;
+import com.gargoylesoftware.htmlunit.html.HtmlTableBody;
 import com.gargoylesoftware.htmlunit.html.HtmlTableCell;
 import com.gargoylesoftware.htmlunit.html.HtmlTableRow;
 
@@ -120,38 +126,38 @@ public class Scraper {
 	
 	private void writeInspectionData(Car car) {
 		car.setCalInspectionDate(getLabelValueByKey("Beregnet dato for næste indkaldelse til periodisk syn:"));
-		addInspections(car);
-			
 	}
 
-	private void addInspections(Car car) {
-		
+	public void addInspections(String regNr, Car car) {
+		String url = "http://selvbetjening.trafikstyrelsen.dk/Sider/resultater.aspx?Reg=" + regNr;
 		try {
-			HtmlTable table = (HtmlTable) finalPage.getByXPath("//table[@class='stripes']").get(0);
+			WebClient webClient = new WebClient();
+		    HtmlPage page = webClient.getPage(url);
+		    HtmlTableBody table = (HtmlTableBody) page.getByXPath("//table[@id='tblInspections']/tbody").get(0);
 			
-			boolean firstRow = true;
-			boolean firstInsp = true;
 		    for (HtmlTableRow row : table.getRows()) {
-		    	
-		    	if(!firstRow) {
-		    		
-		    		String status = row.getCell(2).asText();
-		    		String date = row.getCell(3).asText();
-		    		
-		    		Inspection insp = car.addInspection(date, status);
-		    		if (firstInsp) {
-		    			firstInsp = false;
-		    			insp.setType(getSpanValueByKey("Synstype:"));
+		    	Inspection inspec = new Inspection();
+		    	String[] data = new String[row.getChildElementCount()];
+		    	int i = 0;
+		    	for(HtmlTableCell td : row.getCells()){
+		    		if(!td.asXml().contains("<a")){
+		    			data[i] = td.asText();
+		    		}else{
+		    			HtmlAnchor a = (HtmlAnchor) td.getFirstByXPath("//a[@class='saveIcon']");
+		    			data[i] = "http://selvbetjening.trafikstyrelsen.dk" + a.getAttribute("href");
 		    		}
-		    	} 
-		    	else {
-		    		firstRow = false;
+		    		i++;
 		    	}
+		    	inspec.setDate(data[0]);
+		    	inspec.setResult(data[1]);
+		    	inspec.setKm(data[2]);
+		    	inspec.setRegNr(data[3]);
+		    	inspec.setUrl(data[4]);
 		    	
+		    	car.addInspection(inspec);
 		    }
-		}
-		catch(NullPointerException | IndexOutOfBoundsException e) {
-			//No inspections
+		} catch(Exception e) {
+			System.out.println(e);
 		}
 	}
 }

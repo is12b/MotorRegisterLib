@@ -1,4 +1,4 @@
-package dk.is12b;
+package dk.is12b.Test;
 
 import java.util.ArrayList;
 
@@ -43,12 +43,12 @@ public class Test {
 		System.out.println("Antal døre: " + car.getNumOfDoors());
 		System.out.println("Beregnet Synsdato: " + car.getCalInspectionDate());
 		
-		ArrayList<Inspection> inspecs = car.getInspections();
-		System.out.println("Antal syn: " + inspecs.size());
+		//ArrayList<Inspection> inspecs = car.getInspections();
+		//System.out.println("Antal syn: " + inspecs.size());
 		
-		for (Inspection i : inspecs) {
-			System.out.println(" ->" + i.getDate() + ", Type: " + i.getType() + ", Status: " + i.getStatus());
-		}
+		//for (Inspection i : inspecs) {
+		//	System.out.println(" ->" + i.getDate() + ", Type: " + i.getType() + ", Status: " + i.getStatus());
+		//}
 		//Checking Cache
 		Car car2 = null;
 		try {
