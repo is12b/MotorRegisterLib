@@ -11,7 +11,7 @@ public class TestInspection {
 	}
 	
 	public TestInspection(){
-		
+		/*
 		Scraper sc = new Scraper();
 		
 		Car car = new Car();
@@ -21,6 +21,8 @@ public class TestInspection {
 		for(Inspection i : car.getInspections()){
 			System.out.println(i);
 		}
+		*/
+
 	}
 
 }

@@ -43,6 +43,10 @@ public class Test {
 		System.out.println("Antal døre: " + car.getNumOfDoors());
 		System.out.println("Beregnet Synsdato: " + car.getCalInspectionDate());
 		
+		for(Inspection i : car.getInspections()){
+			System.out.println(i);
+		}
+		
 		//ArrayList<Inspection> inspecs = car.getInspections();
 		//System.out.println("Antal syn: " + inspecs.size());
 		

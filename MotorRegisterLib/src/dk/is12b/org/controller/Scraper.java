@@ -56,7 +56,7 @@ public class Scraper {
 		    page = webClient.getPage("https://motorregister.skat.dk/dmr-front/appmanager/skat/dmr?_nfpb=true&_windowLabel=kerne_vis_koeretoej&kerne_vis_koeretoej_actionOverride=%2Fdk%2Fskat%2Fdmr%2Ffront%2Fportlets%2Fkoeretoej%2Fnested%2FvisKoeretoej%2FselectTab&kerne_vis_koeretoejdmr_tabset_tab=2&_pageLabel=vis_koeretoej_side");
 		    result = page.executeJavaScript("DMR.WaitForLoad.on();");
 		    finalPage = (HtmlPage) result.getNewPage();
-		    writeInspectionData(car);
+		    writeInspectionData(car, regNr);
 		    		    
 		    cCont.addCar(car);
 		    webClient.closeAllWindows();
@@ -124,8 +124,9 @@ public class Scraper {
 		car.setPosOfChassisNumber(getLabelValueByKey("Anbringelse af stelnummer:"));
 	}
 	
-	private void writeInspectionData(Car car) {
+	private void writeInspectionData(Car car, String regNr) {
 		car.setCalInspectionDate(getLabelValueByKey("Beregnet dato for næste indkaldelse til periodisk syn:"));
+		addInspections(regNr, car);
 	}
 
 	public void addInspections(String regNr, Car car) {
