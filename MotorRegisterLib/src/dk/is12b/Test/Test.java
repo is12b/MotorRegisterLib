@@ -16,6 +16,7 @@ public class Test {
 		Scraper sc = new Scraper();
 		Car car = null;
 		try {
+			//FC95942
 			car = sc.getCar("FA21984");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -41,18 +42,22 @@ public class Test {
 		System.out.println("Brændstofforbrug: " + car.getFuelConsumption());
 		System.out.println("Karrosseritype: " + car.getBodyType());
 		System.out.println("Antal døre: " + car.getNumOfDoors());
+		System.out.println("Frekvens for syn: " + car.getInspectionFreq());
 		System.out.println("Beregnet Synsdato: " + car.getCalInspectionDate());
 		
-		for(Inspection i : car.getInspections()){
+		ArrayList<Inspection> inspecs = car.getInspections();
+		System.out.println("Antal syn: " + inspecs.size());
+		for(Inspection i : inspecs){
 			System.out.println(i);
 		}
 		
-		//ArrayList<Inspection> inspecs = car.getInspections();
-		//System.out.println("Antal syn: " + inspecs.size());
-		
-		//for (Inspection i : inspecs) {
-		//	System.out.println(" ->" + i.getDate() + ", Type: " + i.getType() + ", Status: " + i.getStatus());
-		//}
+		if (!car.isInsured()) {
+			System.out.println("Har ingen fosikring");
+		} else {
+			System.out.println("Forsikring: " + car.getInsuranceComp());
+			System.out.println("- Status: " + car.getInsuranceStatus());
+			System.out.println("- Oprettet: " + car.getInsuranceCreated());
+		}
 		//Checking Cache
 		Car car2 = null;
 		try {

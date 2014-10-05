@@ -34,8 +34,15 @@ public class Car {
 	private String posOfChassisNumber; // Anbringelse af stelnummer
 	
 	//inspection - Syn
-	private String calInspectionDate; // Beregnet dato for næste indkaldelse til periodisk syn:
+	private String inspectionFreq; // Frekvens for periodisk syn
+	private String calInspectionDate; // Beregnet dato for næste indkaldelse til periodisk syn
 	private ArrayList<Inspection> inspections;
+	
+	//Insurance - Forsikring
+	private boolean isInsured = false;
+	private String insuranceComp; // forsikringsselskab
+	private String insuranceStatus; // forsikringsstatus
+	private String insuranceCreated; // oprettelsedato for forsikring
 	
 	//ID - Iteration
 	private int id;
@@ -330,6 +337,20 @@ public class Car {
 	public void setPosOfChassisNumber(String posOfChassisNumber) {
 		this.posOfChassisNumber = posOfChassisNumber;
 	}
+	
+	/**
+	 * @return the inspectionFreq
+	 */
+	public String getInspectionFreq() {
+		return inspectionFreq;
+	}
+
+	/**
+	 * @param inspectionFreq the inspectionFreq to set
+	 */
+	public void setInspectionFreq(String inspectionFreq) {
+		this.inspectionFreq = inspectionFreq;
+	}
 
 	/**
 	 * @return the calInspectionDate
@@ -356,4 +377,61 @@ public class Car {
 		inspections.add(i);
 		return i;
 	}
+
+	/**
+	 * @return the isInsured
+	 */
+	public boolean isInsured() {
+		return isInsured;
+	}
+
+	/**
+	 * @param isInsured the isInsured to set
+	 */
+	public void setIsInsured(boolean isInsured) {
+		this.isInsured = isInsured;
+	}
+
+	/**
+	 * @return the insuranceComp
+	 */
+	public String getInsuranceComp() {
+		return insuranceComp;
+	}
+
+	/**
+	 * @param insuranceComp the insuranceComp to set
+	 */
+	public void setInsuranceComp(String insuranceComp) {
+		this.insuranceComp = insuranceComp;
+	}
+
+	/**
+	 * @return the insuranceStatus
+	 */
+	public String getInsuranceStatus() {
+		return insuranceStatus;
+	}
+
+	/**
+	 * @param insuranceStatus the insuranceStatus to set
+	 */
+	public void setInsuranceStatus(String insuranceStatus) {
+		this.insuranceStatus = insuranceStatus;
+	}
+
+	/**
+	 * @return the insuranceCreated
+	 */
+	public String getInsuranceCreated() {
+		return insuranceCreated;
+	}
+
+	/**
+	 * @param insuranceCreated the insuranceCreated to set
+	 */
+	public void setInsuranceCreated(String insuranceCreated) {
+		this.insuranceCreated = insuranceCreated;
+	}
+	
 }

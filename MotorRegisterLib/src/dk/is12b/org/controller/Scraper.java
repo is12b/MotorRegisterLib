@@ -1,20 +1,10 @@
 package dk.is12b.org.controller;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.util.Arrays;
-import java.util.List;
-
-import com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException;
-import com.gargoylesoftware.htmlunit.Page;
 import com.gargoylesoftware.htmlunit.ScriptResult;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.DomElement;
 import com.gargoylesoftware.htmlunit.html.HtmlAnchor;
-import com.gargoylesoftware.htmlunit.html.HtmlDivision;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
-import com.gargoylesoftware.htmlunit.html.HtmlSpan;
-import com.gargoylesoftware.htmlunit.html.HtmlTable;
 import com.gargoylesoftware.htmlunit.html.HtmlTableBody;
 import com.gargoylesoftware.htmlunit.html.HtmlTableCell;
 import com.gargoylesoftware.htmlunit.html.HtmlTableRow;
@@ -57,7 +47,12 @@ public class Scraper {
 		    result = page.executeJavaScript("DMR.WaitForLoad.on();");
 		    finalPage = (HtmlPage) result.getNewPage();
 		    writeInspectionData(car, regNr);
-		    		    
+		    
+		    page = webClient.getPage("https://motorregister.skat.dk/dmr-front/appmanager/skat/dmr?_nfpb=true&_windowLabel=kerne_vis_koeretoej&kerne_vis_koeretoej_actionOverride=%2Fdk%2Fskat%2Fdmr%2Ffront%2Fportlets%2Fkoeretoej%2Fnested%2FvisKoeretoej%2FselectTab&kerne_vis_koeretoejdmr_tabset_tab=3&_pageLabel=vis_koeretoej_side");
+		    result = page.executeJavaScript("DMR.WaitForLoad.on();");
+		    finalPage = (HtmlPage) result.getNewPage();
+		    writeInsuranceData(car);
+		    
 		    cCont.addCar(car);
 		    webClient.closeAllWindows();
 		}
@@ -125,8 +120,12 @@ public class Scraper {
 	}
 	
 	private void writeInspectionData(Car car, String regNr) {
+		car.setInspectionFreq(getLabelValueByKey("Frekvens for periodisk syn:"));
 		car.setCalInspectionDate(getLabelValueByKey("Beregnet dato for næste indkaldelse til periodisk syn:"));
-		addInspections(regNr, car);
+		DomElement dE = (DomElement) finalPage.getFirstByXPath("//p[contains(., 'Køretøjet har aldrig været synet.')]");
+		if(dE == null) {
+			addInspections(regNr, car);
+		}
 	}
 
 	public void addInspections(String regNr, Car car) {
@@ -161,4 +160,15 @@ public class Scraper {
 			System.out.println(e);
 		}
 	}
+	
+	private void writeInsuranceData(Car car) {
+		DomElement dE = (DomElement) finalPage.getFirstByXPath("//span[contains(., 'Ingen forsikring:')]");
+		if(dE == null) {
+			car.setIsInsured(true);
+			car.setInsuranceComp(getSpanValueByKey("Selskab:"));
+			car.setInsuranceStatus(getSpanValueByKey("Status:"));
+			car.setInsuranceCreated(getSpanValueByKey("Oprettet:"));
+		}
+	}
+
 }
