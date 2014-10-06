@@ -26,10 +26,12 @@ public class CarContainer {
 		Car car = null;
 		int i = 0;
 		boolean found = false;
-		while(!found && 0 < cars.size()){
-			if(cars.get(i).getRegNumber().equalsIgnoreCase(regNr)){
+		while(!found && i < cars.size()){
+			String savedRegNr= cars.get(i).getRegNumber();
+			if(savedRegNr != null && savedRegNr.equalsIgnoreCase(regNr)){
 				car = cars.get(i);
 				found = true;
+				i++;
 			}
 		}
 		

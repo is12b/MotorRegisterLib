@@ -1,6 +1,7 @@
 package dk.is12b.Test;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import dk.is12b.org.controller.Scraper;
 import dk.is12b.org.model.Car;
@@ -41,7 +42,6 @@ public class Test {
 		System.out.println("Drivkraft: " + car.getPropellant());
 		System.out.println("Brændstofforbrug: " + car.getFuelConsumption());
 		System.out.println("Karrosseritype: " + car.getBodyType());
-		System.out.println("Antal døre: " + car.getNumOfDoors());
 		System.out.println("Frekvens for syn: " + car.getInspectionFreq());
 		System.out.println("Beregnet Synsdato: " + car.getCalInspectionDate());
 		
@@ -58,6 +58,13 @@ public class Test {
 			System.out.println("- Status: " + car.getInsuranceStatus());
 			System.out.println("- Oprettet: " + car.getInsuranceCreated());
 		}
+		
+		HashSet<String> permissions = car.getPermissions();
+		System.out.println("Antal tilladelser: " + permissions.size());
+		for(String p : permissions){
+			System.out.println("Tilladelse: " + p);
+		}
+		
 		//Checking Cache
 		Car car2 = null;
 		try {

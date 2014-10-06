@@ -1,6 +1,7 @@
 package dk.is12b.org.model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class Car {
 	//Vehicle - Køretøj
@@ -30,7 +31,6 @@ public class Car {
 	
 	//Body - Karrosseri
 	private String bodyType; // Karrosseritype
-	private String numOfDoors; // Antal døre
 	private String posOfChassisNumber; // Anbringelse af stelnummer
 	
 	//inspection - Syn
@@ -44,6 +44,9 @@ public class Car {
 	private String insuranceStatus; // forsikringsstatus
 	private String insuranceCreated; // oprettelsedato for forsikring
 	
+	//Permissions - Dispensationer og tilladelser
+	private HashSet<String> permissions;
+	
 	//ID - Iteration
 	private int id;
 	private static int idIterator;
@@ -52,6 +55,7 @@ public class Car {
 		idIterator++;
 		this.id = idIterator;
 		inspections = new ArrayList<Inspection>();
+		permissions = new HashSet<String>();
 	}
 	
 	public int getID(){
@@ -311,20 +315,6 @@ public class Car {
 	}
 
 	/**
-	 * @return the numOfDoors
-	 */
-	public String getNumOfDoors() {
-		return numOfDoors;
-	}
-
-	/**
-	 * @param numOfDoors the numOfDoors to set
-	 */
-	public void setNumOfDoors(String numOfDoors) {
-		this.numOfDoors = numOfDoors;
-	}
-
-	/**
 	 * @return the posOfChassisNumber
 	 */
 	public String getPosOfChassisNumber() {
@@ -433,5 +423,18 @@ public class Car {
 	public void setInsuranceCreated(String insuranceCreated) {
 		this.insuranceCreated = insuranceCreated;
 	}
+
+	/**
+	 * @return the permissions
+	 */
+	public HashSet<String> getPermissions() {
+		return permissions;
+	}
 	
+	/**
+	 * @param permission
+	 */
+	public void addPermission(String permission) {
+		permissions.add(permission);
+	}
 }

@@ -1,10 +1,16 @@
 package dk.is12b.org.controller;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.util.List;
+
+import com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException;
 import com.gargoylesoftware.htmlunit.ScriptResult;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.DomElement;
 import com.gargoylesoftware.htmlunit.html.HtmlAnchor;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import com.gargoylesoftware.htmlunit.html.HtmlTable;
 import com.gargoylesoftware.htmlunit.html.HtmlTableBody;
 import com.gargoylesoftware.htmlunit.html.HtmlTableCell;
 import com.gargoylesoftware.htmlunit.html.HtmlTableRow;
@@ -15,6 +21,7 @@ import dk.is12b.org.model.Inspection;
 
 public class Scraper {
 	private HtmlPage finalPage;
+	private WebClient webClient;
 
 	public Scraper(){
 
@@ -27,36 +34,45 @@ public class Scraper {
 		
 		if(car == null){
 			car = new Car();
-		    WebClient webClient = new WebClient();
-		    HtmlPage page = webClient.getPage("https://motorregister.skat.dk/dmr-front/appmanager/skat/dmr?_nfpb=true&_nfpb=true&_pageLabel=vis_koeretoej_side&_nfls=false");
+		    webClient = new WebClient();
+		    finalPage = getExecutedDMRPage(true, regNr, "https://motorregister.skat.dk/dmr-front/appmanager/skat/dmr?_nfpb=true&_nfpb=true&_pageLabel=vis_koeretoej_side&_nfls=false");
 		    
-		    ScriptResult result = page.executeJavaScript("document.getElementById('regnr').checked=true;"
-	                +"document.getElementById('soegeord').value='"+regNr+"';"
-	                +"document.getElementById('searchForm').submit();"
-	                +"DMR.WaitForLoad.on();");
+		    if(getSpanValueByKey("Stelnummer:") != "Ukendt") {
 		    
-		    finalPage = (HtmlPage) result.getNewPage();
-		    writeVehicleData(car);
-		    
-		    page = webClient.getPage("https://motorregister.skat.dk/dmr-front/appmanager/skat/dmr?_nfpb=true&_windowLabel=kerne_vis_koeretoej&kerne_vis_koeretoej_actionOverride=%2Fdk%2Fskat%2Fdmr%2Ffront%2Fportlets%2Fkoeretoej%2Fnested%2FvisKoeretoej%2FselectTab&kerne_vis_koeretoejdmr_tabset_tab=1&_pageLabel=vis_koeretoej_side");
-		    result = page.executeJavaScript("DMR.WaitForLoad.on();");
-		    finalPage = (HtmlPage) result.getNewPage();
-		    writeTechnicalData(car);
-		    
-		    page = webClient.getPage("https://motorregister.skat.dk/dmr-front/appmanager/skat/dmr?_nfpb=true&_windowLabel=kerne_vis_koeretoej&kerne_vis_koeretoej_actionOverride=%2Fdk%2Fskat%2Fdmr%2Ffront%2Fportlets%2Fkoeretoej%2Fnested%2FvisKoeretoej%2FselectTab&kerne_vis_koeretoejdmr_tabset_tab=2&_pageLabel=vis_koeretoej_side");
-		    result = page.executeJavaScript("DMR.WaitForLoad.on();");
-		    finalPage = (HtmlPage) result.getNewPage();
-		    writeInspectionData(car, regNr);
-		    
-		    page = webClient.getPage("https://motorregister.skat.dk/dmr-front/appmanager/skat/dmr?_nfpb=true&_windowLabel=kerne_vis_koeretoej&kerne_vis_koeretoej_actionOverride=%2Fdk%2Fskat%2Fdmr%2Ffront%2Fportlets%2Fkoeretoej%2Fnested%2FvisKoeretoej%2FselectTab&kerne_vis_koeretoejdmr_tabset_tab=3&_pageLabel=vis_koeretoej_side");
-		    result = page.executeJavaScript("DMR.WaitForLoad.on();");
-		    finalPage = (HtmlPage) result.getNewPage();
-		    writeInsuranceData(car);
+			    writeVehicleData(car);
+			    
+			    finalPage = getExecutedDMRPage(false, regNr, "https://motorregister.skat.dk/dmr-front/appmanager/skat/dmr?_nfpb=true&_windowLabel=kerne_vis_koeretoej&kerne_vis_koeretoej_actionOverride=%2Fdk%2Fskat%2Fdmr%2Ffront%2Fportlets%2Fkoeretoej%2Fnested%2FvisKoeretoej%2FselectTab&kerne_vis_koeretoejdmr_tabset_tab=1&_pageLabel=vis_koeretoej_side");
+			    writeTechnicalData(car);
+			    
+			    finalPage = getExecutedDMRPage(false, regNr, "https://motorregister.skat.dk/dmr-front/appmanager/skat/dmr?_nfpb=true&_windowLabel=kerne_vis_koeretoej&kerne_vis_koeretoej_actionOverride=%2Fdk%2Fskat%2Fdmr%2Ffront%2Fportlets%2Fkoeretoej%2Fnested%2FvisKoeretoej%2FselectTab&kerne_vis_koeretoejdmr_tabset_tab=2&_pageLabel=vis_koeretoej_side");
+			    writeInspectionData(car, regNr);
+			    
+			    finalPage = getExecutedDMRPage(false, regNr, "https://motorregister.skat.dk/dmr-front/appmanager/skat/dmr?_nfpb=true&_windowLabel=kerne_vis_koeretoej&kerne_vis_koeretoej_actionOverride=%2Fdk%2Fskat%2Fdmr%2Ffront%2Fportlets%2Fkoeretoej%2Fnested%2FvisKoeretoej%2FselectTab&kerne_vis_koeretoejdmr_tabset_tab=3&_pageLabel=vis_koeretoej_side");
+			    writeInsuranceData(car);
+			    
+			    finalPage = getExecutedDMRPage(false, regNr, "https://motorregister.skat.dk/dmr-front/appmanager/skat/dmr?_nfpb=true&_windowLabel=kerne_vis_koeretoej&kerne_vis_koeretoej_actionOverride=%2Fdk%2Fskat%2Fdmr%2Ffront%2Fportlets%2Fkoeretoej%2Fnested%2FvisKoeretoej%2FselectTab&kerne_vis_koeretoejdmr_tabset_tab=5&_pageLabel=vis_koeretoej_side");
+			    writePermissions(car);
+		    }
 		    
 		    cCont.addCar(car);
 		    webClient.closeAllWindows();
 		}
 	    return car;
+	}
+
+	private HtmlPage getExecutedDMRPage(boolean firstLoad, String regNr, String url) throws FailingHttpStatusCodeException, MalformedURLException, IOException {
+		HtmlPage page = webClient.getPage(url);
+		String executeStr;
+		if (firstLoad) {
+			executeStr = "document.getElementById('regnr').checked=true;"
+	                +"document.getElementById('soegeord').value='"+regNr+"';"
+	                +"document.getElementById('searchForm').submit();"
+	                +"DMR.WaitForLoad.on();";
+		} else {
+			executeStr = "DMR.WaitForLoad.on();";
+		}
+		ScriptResult result = page.executeJavaScript(executeStr);
+    	return (HtmlPage) result.getNewPage();
 	}
 
 	private String getSpanValueByKey(String key){
@@ -115,7 +131,6 @@ public class Scraper {
 		car.setPropellant(getLabelValueByKey("Drivkraft:"));
 		car.setFuelConsumption(getLabelValueByKey("Brændstofforbrug:"));
 		car.setBodyType(getLabelValueByKey("Karrosseritype:"));
-		car.setNumOfDoors(getLabelValueByKey("Antal døre:"));
 		car.setPosOfChassisNumber(getLabelValueByKey("Anbringelse af stelnummer:"));
 	}
 	
@@ -169,6 +184,19 @@ public class Scraper {
 			car.setInsuranceStatus(getSpanValueByKey("Status:"));
 			car.setInsuranceCreated(getSpanValueByKey("Oprettet:"));
 		}
+	}
+	
+	private void writePermissions(Car car) {
+		HtmlTable table = (HtmlTable)  finalPage.getFirstByXPath("//table[@class='stripes']");
+		if(table != null) {
+			int index = 1;
+			List<HtmlTableRow> rows = table.getRows();
+			while(index < rows.size() && rows.get(0).getCell(0).asText().equals("Tilladelse")) {
+				car.addPermission(rows.get(index).getCell(0).asText());
+				index++;
+			}
+		}
+				
 	}
 
 }
