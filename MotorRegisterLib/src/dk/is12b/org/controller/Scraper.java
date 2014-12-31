@@ -27,7 +27,6 @@ public class Scraper {
 
 	}
 
-	@SuppressWarnings("unchecked")
 	public Car getCar(String regNr) throws Exception {
 		CarContainer cCont = CarContainer.getInstance();
 		Car car = cCont.getCar(regNr);
@@ -147,30 +146,33 @@ public class Scraper {
 		String url = "http://selvbetjening.trafikstyrelsen.dk/Sider/resultater.aspx?Reg=" + regNr;
 		try {
 			WebClient webClient = new WebClient();
-		    HtmlPage page = webClient.getPage(url);
-		    HtmlTableBody table = (HtmlTableBody) page.getByXPath("//table[@id='tblInspections']/tbody").get(0);
-			
-		    for (HtmlTableRow row : table.getRows()) {
-		    	Inspection inspec = new Inspection();
-		    	String[] data = new String[row.getChildElementCount()];
-		    	int i = 0;
-		    	for(HtmlTableCell td : row.getCells()){
-		    		if(!td.asXml().contains("<a")){
-		    			data[i] = td.asText();
-		    		}else{
-		    			HtmlAnchor a = (HtmlAnchor) td.getFirstByXPath("//a[@class='saveIcon']");
-		    			data[i] = "http://selvbetjening.trafikstyrelsen.dk" + a.getAttribute("href");
-		    		}
-		    		i++;
-		    	}
-		    	inspec.setDate(data[0]);
-		    	inspec.setResult(data[1]);
-		    	inspec.setKm(data[2]);
-		    	inspec.setRegNr(data[3]);
-		    	inspec.setUrl(data[4]);
-		    	
-		    	car.addInspection(inspec);
-		    }
+			HtmlPage page = webClient.getPage(url);
+			List<?> tableInspecs = page.getByXPath("//table[@id='tblInspections']/tbody");
+			if (tableInspecs.size() != 0) {
+				HtmlTableBody table = (HtmlTableBody) tableInspecs.get(0);
+
+				for (HtmlTableRow row : table.getRows()) {
+					Inspection inspec = new Inspection();
+					String[] data = new String[row.getChildElementCount()];
+					int i = 0;
+					for(HtmlTableCell td : row.getCells()){
+						if(!td.asXml().contains("<a")){
+							data[i] = td.asText();
+						}else{
+							HtmlAnchor a = (HtmlAnchor) td.getFirstByXPath("//a[@class='saveIcon']");
+							data[i] = "http://selvbetjening.trafikstyrelsen.dk" + a.getAttribute("href");
+						}
+						i++;
+					}
+					inspec.setDate(data[0]);
+					inspec.setResult(data[1]);
+					inspec.setKm(data[2]);
+					inspec.setRegNr(data[3]);
+					inspec.setUrl(data[4]);
+
+					car.addInspection(inspec);
+				}
+			}
 		} catch(Exception e) {
 			System.out.println(e);
 		}
